@@ -68,6 +68,27 @@ class Linear(Graph):
         core_basis = Ideal(eqns).elimination_ideal(dc_vars).groebner_basis()
         return core_basis, e2[idedge]
 
+    def g_relevent_basis(self, idedge, eql_edge):
+        from sage.rings.polynomial.polynomial_ring_constructor import PolynomialRing
+        from sage.rings.rational_field import QQ
+        from sage.rings.ideal import Ideal
+        from sage.symbolic.ring import var
+        e  = generateEdges(self)
+        e2 = generateEdges(self, "X_", "e_")
+        cr_vars = [k for k in e2.keys() if k in eql_edge or k == idedge]
+        dc_vars = [k for k in e2.keys() if k not in eql_edge and k != idedge]
+        variables = [e2[v] for v in dc_vars] + [e2[v] for v in cr_vars] + list(e.values())
+        ring = PolynomialRing(QQ, variables)
+        gens = ring.gens()
+        e = replaceDictVals(e, variables, gens)
+        e2 = replaceDictVals(e2, variables, gens)
+        cov1 = generateCovarianceEquations(self, e)
+        cov2 = generateCovarianceEquations(self, e2)
+        eqns = [cov1[k] - cov2[k] for k in cov1]
+        dc_symbols  = [e2[v] for v in dc_vars]
+        core_basis  = Ideal(eqns).elimination_ideal(dc_symbols).groebner_basis()
+        return core_basis, e2[idedge], (e2[eql_edge[0]], e2[eql_edge[1]]), e
+
     def gidentify(self, idedge, eql_edges=None):
         import sage.all
         if eql_edges is not None:
