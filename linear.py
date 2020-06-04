@@ -56,8 +56,7 @@ class Linear(Graph):
         q = [i for i in range(1, len(e) + 2)]
         rnd.shuffle(q)
         for idx, e_t in enumerate(e):
-            if rnd.random() < 0.5:
-                e[e_t] = q[idx]
+            e[e_t] = q[idx]
         e[eql_edge[0]] = q[-1]
         e[eql_edge[1]] = e[eql_edge[0]]
         e2 = replaceDictVals(e2, variables, gens)
