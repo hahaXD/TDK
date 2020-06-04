@@ -11,6 +11,7 @@ for i in range(1, 4096):
             for key in result:
                 result[key][0].degree(result[key][1])
                 dg = result[key][0][0].degree(result[key][1])
+                print (dg)
                 if dg not in summary:
                     summary[dg] = 1
                 else:
