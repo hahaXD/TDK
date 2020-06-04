@@ -1,6 +1,7 @@
 from graph import Graph
 from wright import generateCovarianceEquations, generateSimplifiedCovarianceEquations
 import networkx as nx
+import random as rnd
 
 def edges_union_find(eql_edges):
     uf = nx.utils.UnionFind()
@@ -40,6 +41,30 @@ class Linear(Graph):
 
     def __init__(self, G):
         Graph.__init__(self, G)
+
+    def solve_by_random_weights(self, idedge, eql_edge):
+
+        from sage.rings.polynomial.polynomial_ring_constructor import PolynomialRing
+        from sage.rings.rational_field import QQ
+        from sage.rings.ideal import Ideal
+        from sage.symbolic.ring import var
+        e  = generateEdges(self)
+        e2 = generateEdges(self, "X_", "e_")
+        variables = list(e2.values())
+        ring = PolynomialRing(QQ, variables)
+        gens = ring.gens()
+        for e_t in e:
+            e[e_t] = (rnd.random() - 0.5) * 10
+        e[eql_edge[0]] = (rnd.random() - 0.5) * 10
+        e[eql_edge[1]] = e[eql_edge[0]]
+        e2 = replaceDictVals(e2, variables, gens)
+        cov1 = generateCovarianceEquations(self, e)
+        cov2 = generateCovarianceEquations(self, e2)
+        eqns = [cov1[k] - cov2[k] for k in cov1]
+        eqns.append(e2[eql_edge[0]] - e2[eql_edge[1]])
+        dc_vars  = [e2[k] for k in e2 if k != idedge]
+        core_basis = Ideal(eqns).elimination_ideal(dc_vars).groebner_basis()
+        return core_basis, e2[idedge]
 
     def gidentify(self, idedge, eql_edges=None):
         import sage.all
