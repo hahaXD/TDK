@@ -24,5 +24,5 @@ for g_id, g in enumerate(graphs):
         g_res[l_edge] = (basis, target, e)
         if len(basis) > 0:
             assert (basis[-1].degree(target) != 0)
-    with open ("organic/{}.pk".format(g_id), "w") as fp:
+    with open ("organic/{}.pk".format(g_id), "wb") as fp:
         pickle.dump(g_res, fp)
