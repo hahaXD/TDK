@@ -1,6 +1,6 @@
 import linear as lr
 import sys
-
+import json
 with open (sys.argv[1], "r") as fp:
     graphs = json.load(fp)["graphs"]
 
