@@ -16,6 +16,6 @@ for g_id, g in enumerate(graphs):
     for edge in g["arrow_edges"]:
         basis, target, e = l.gidentify((edge[0], edge[1]))
         if len(basis) > 0:
-            print (basis)
+            print (basis[-1].roots())
             import sys
             sys.exit(1)
