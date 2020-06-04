@@ -8,7 +8,6 @@ n_graphs = len(graphs)
 for g_id, g in enumerate(graphs):
     print ("Handeling {} / {} graphs".format(g_id, n_graphs))
     if len(g["arrow_edges"]) == 0 and len(g["latent_edges"]) == 0:
-        results.append({"graph": g})
         continue
     l = lr.Linear(g["graph_str"])
     print (g["graph_str"])
