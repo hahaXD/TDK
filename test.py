@@ -10,6 +10,8 @@ for i in range(1, 4096):
         with open(fname, "rb") as fp:
             result = pickle.load(fp)
             for key in result:
+                if key == "eql_edges":
+                    continue
                 dg = result[key][0][0].degree(result[key][1])
                 if dg not in summary:
                     summary[dg] = 1
