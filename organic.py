@@ -16,10 +16,14 @@ for g_id, g in enumerate(graphs):
         basis, target, e = l.gidentify((edge[0], edge[1]))
         g_res[(edge[0], edge[1])] = (basis, target, e)
         if len(basis) > 0:
-            assert(basis[-1].degree(target) > 0)
+            if basis[-1].degree(target) <= 0 :
+                print (basis[-1])
+                sys.exit(1)
     for edge in g["latent_edges"]:
         l_edge = tuple(["latent"] + sorted(edge))
         basis, target, e = l.gidentify(l_edge)
         g_res[l_edge] = (basis, target, e)
         if len(basis) > 0:
-            assert(basis[-1].degree(target) > 0)
+            if basis[-1].degree(target) <= 0 :
+                print (basis[-1])
+                sys.exit(1)
