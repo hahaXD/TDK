@@ -7,4 +7,4 @@ from sage.all import *
 variables = ["x", "y"]
 ring = PolynomialRing(QQ, variables)
 gens = ring.gens()
-Ideal([gens[0]**2 - gens[1], gens[1]*gens[0]]).solve()
+Ideal([gens[0]**2 - gens[1], gens[1]*gens[0]]).groebner_basis().solve()
