@@ -62,6 +62,7 @@ class Linear(Graph):
         cov2 = generateCovarianceEquations(self, e2)
         eqns = [cov1[k] - cov2[k] for k in cov1]
         eqns.append(e2[eql_edge[0]] - e2[eql_edge[1]])
+        print (eqns)
         dc_vars  = [e2[k] for k in e2 if k != idedge]
         core_basis = Ideal(eqns).elimination_ideal(dc_vars).groebner_basis()
         return core_basis, e2[idedge]
