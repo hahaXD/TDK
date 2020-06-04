@@ -58,12 +58,7 @@ class Linear(Graph):
         for idx, e_t in enumerate(e):
             if rnd.random() < 0.5:
                 e[e_t] = q[idx]
-            else:
-                e[e_t] = -1*q[idx]
-        if rnd.random() < 0.5:
-            e[eql_edge[0]] = q[-1]
-        else:
-            e[eql_edge[0]] = -q[-1]
+        e[eql_edge[0]] = q[-1]
         e[eql_edge[1]] = e[eql_edge[0]]
         e2 = replaceDictVals(e2, variables, gens)
         cov1 = generateCovarianceEquations(self, e)
