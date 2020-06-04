@@ -53,9 +53,17 @@ class Linear(Graph):
         variables = list(e2.values())
         ring = PolynomialRing(QQ, variables)
         gens = ring.gens()
-        for e_t in e:
-            e[e_t] = (rnd.random() - 0.5) * 10
-        e[eql_edge[0]] = (rnd.random() - 0.5) * 10
+        q = [i for i in range(1, len(e) + 2)]
+        rnd.shuffle(q)
+        for idx, e_t in enumerate(e):
+            if rnd.random() < 0.5:
+                e[e_t] = q[idx]
+            else:
+                e[e_t] = -1*q[idx]
+        if rnd.random() < 0.5:
+            e[eql_edge[0]] = q[-1]
+        else:
+            e[eql_edge[0]] = -q[-1]
         e[eql_edge[1]] = e[eql_edge[0]]
         e2 = replaceDictVals(e2, variables, gens)
         cov1 = generateCovarianceEquations(self, e)
